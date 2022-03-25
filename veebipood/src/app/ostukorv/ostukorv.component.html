@@ -1,0 +1,11 @@
+<div  *ngIf="boolean">{{ string }}</div>
+<div *ngIf="number > 100">{{ number }}</div>
+<div>{{ boolean }}</div>
+
+<div>{{ string + string }}</div>
+<div>{{ number + number }}</div>
+<div>{{ boolean + string }}</div>
+
+<button (click)="korrutaKahega()">Korruta number kahega</button>
+<button (click)="muudaBoolean()">Muuda boolean false-ks</button>
+<button (click)="muudaBoolean2()">Muuda boolean false-ks2</button>

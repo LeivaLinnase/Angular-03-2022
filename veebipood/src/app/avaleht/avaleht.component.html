@@ -1,7 +1,7 @@
-<div *ngFor="let nimi of tooted">
-    <div>Nimi: {{ nimi }}</div>
-    <div>Hind: 3</div>
+<div *ngFor="let t of tooted">
+    <div>Nimi: {{ t.nimi }}</div>
+    <div>Hind: {{ t.hind }}</div>
     <div>Kategooria: coca</div>
-    <button>Lisa {{ nimi }} ostukorvi</button>
+    <button (click)="lisaOstukorvi(t)">Lisa {{ t.nimi }} ostukorvi</button>
 </div>
     

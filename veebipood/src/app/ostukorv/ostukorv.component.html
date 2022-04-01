@@ -6,10 +6,13 @@
 
 
 <div *ngFor="let item of ostukorviTooted">
-    <span>Toode: {{ item }}</span>
+    <span>Toode: {{ item.nimi }}</span>
+    <span> - {{ item.hind }}</span>
     <button (click)="kustutaToode(item)">-</button>
     <button (click)="lisaToode(item)">+</button>
 </div>
+
+<div>Kokku: {{ koguSumma }} $</div>
 
 
 <!-- <div  *ngIf="boolean">{{ string }}</div>

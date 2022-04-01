@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AvalehtComponent implements OnInit {
 
+
+
+// massiiv / list / array
+          // 5 elementi
+tooted = ["Coca cola", "Fanta", "Sprite", "Vichy", "Vitamin well"];
+
+
+
   constructor() { 
     console.log("pannakse constructor k2ima");
   }

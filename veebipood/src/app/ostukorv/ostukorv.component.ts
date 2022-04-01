@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ostukorv.component.css']
 })
 export class OstukorvComponent implements OnInit {
+  ostukorviTooted = ["Coca cola", "Fanta", "Sprite", "Vichy", "Vitamin well", "Kali"];
 
-  string = "s6naline muutuja";
-  number = 22; //numbriline muutuja - saan teha arvutusi
-  boolean = true; //kahendv22rtus, ainult kas "true v6i "false
+  // string = "s6naline muutuja";
+  // number = 22; //numbriline muutuja - saan teha arvutusi
+  // boolean = true; //kahendv22rtus, ainult kas "true v6i "false
 
   constructor() {
     console.log("pannakse constructor k2ima");
@@ -19,17 +20,43 @@ export class OstukorvComponent implements OnInit {
     console.log("pannakse ngOnInit k2ima");
   }
 
-  muudaBoolean() {
-    this.boolean = false;
+  kustutaToode(toode: any) {
+     //js delete element from array  stackoverflow
+     //  codegrepper.com
+     // find index with .indexOf     mozilla indexof
+     // remove with .splice()        mozilla splice
+     const j2rjekorraNumber = this.ostukorviTooted.indexOf(toode);
+     this.ostukorviTooted.splice(j2rjekorraNumber,1);
+     
+     // `EI OLE SELLIST ASJA NAGU  .remove() v6i .delete()
+  }
+
+  lisaToode(toode: any) {
+    console.log(toode)
+  this.ostukorviTooted.push(toode);
+  
+  }
+
+  tyhjendaTooted() {
+    this.ostukorviTooted = [];
+
+    //SALVESTAMINE:
+    // 1. Andmebaas
+    // 2. Brauseri m2lu
+    // 3. Faili kirjutamine
 
   }
-  korrutaKahega() {
-    this.number = this.number * 2;
-  }
+  // muudaBoolean() {
+  //   this.boolean = false;
 
-  muudaBoolean2() {
-    this.boolean = !this.boolean;
-  }
+  // }
+  // korrutaKahega() {
+  //   this.number = this.number * 2;
+  // }
+
+  // muudaBoolean2() {
+  //   this.boolean = !this.boolean;
+  // }
 } 
 
 

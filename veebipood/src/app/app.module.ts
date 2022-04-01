@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AvalehtComponent } from './avaleht/avaleht.component';
 import { OstukorvComponent } from './ostukorv/ostukorv.component';
+import { AutodComponent } from './autod/autod.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AvalehtComponent,
-    OstukorvComponent
+    OstukorvComponent,
+    AutodComponent
   ],
   imports: [
     BrowserModule,

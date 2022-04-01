@@ -1,0 +1,14 @@
+
+<div *ngIf="autod.length === 8">Valitud ei ole yhtegi autot</div>
+<div *ngIf="autod.length === 9">Valitud on 1 auto</div>
+<div *ngIf="autod.length > 9">Valitud on {{ autod.length - 8 }} autot</div>
+<div *ngFor="let auto of autod">
+    <div class="nimed">
+        {{ auto }}
+    </div>
+        <button class="itemNupp" (click)="lisa(auto)">Lisa juurde</button>
+    
+        <button *ngIf="hasDuplicates(autod)" class="itemNupp"(click)="kustuta(auto)">Eemalda</button>
+</div>
+<hr>
+<button class="tyhjendaNupp" (click)="tyhjenda()">Tyhjenda</button>

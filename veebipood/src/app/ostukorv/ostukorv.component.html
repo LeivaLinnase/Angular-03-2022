@@ -1,4 +1,18 @@
-<div  *ngIf="boolean">{{ string }}</div>
+<button *ngIf="ostukorviTooted.length > 0" (click)="tyhjendaTooted()">Tyhjenda</button>
+<div *ngIf="ostukorviTooted.length >= 2">Ostukorvis on {{ ostukorviTooted.length }} eset</div>
+<div *ngIf="ostukorviTooted.length === 1">Ostukorvis on {{ ostukorviTooted.length }} ese</div>
+
+<div *ngIf="ostukorviTooted.length === 0">Ostukorv on tyhi</div>
+
+
+<div *ngFor="let item of ostukorviTooted">
+    <span>Toode: {{ item }}</span>
+    <button (click)="kustutaToode(item)">-</button>
+    <button (click)="lisaToode(item)">+</button>
+</div>
+
+
+<!-- <div  *ngIf="boolean">{{ string }}</div>
 <div *ngIf="number > 100">{{ number }}</div>
 <div>{{ boolean }}</div>
 
@@ -8,4 +22,5 @@
 
 <button (click)="korrutaKahega()">Korruta number kahega</button>
 <button (click)="muudaBoolean()">Muuda boolean false-ks</button>
-<button (click)="muudaBoolean2()">Muuda boolean false-ks2</button>
+<button (click)="muudaBoolean2()">Muuda boolean false-ks2</button> -->
+

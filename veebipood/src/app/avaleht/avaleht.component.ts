@@ -14,7 +14,7 @@ export class AvalehtComponent implements OnInit {
           // 5 elementi
 tooted = [
 {nimi: "Coca cola", hind: 2, aktiivne: true}, 
-{nimi: "Fanta", hind: 2, aktiivne: true},
+{nimi: "Fanta", hind: 2, aktiivne: false},
 {nimi: "Sprite", hind: 2, aktiivne: true},
 {nimi: "Vichy", hind: 1.5, aktiivne: true},
 {nimi: "Vitamin well", hind: 3, aktiivne: true}

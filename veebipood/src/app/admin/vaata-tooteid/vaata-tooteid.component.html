@@ -1,0 +1,11 @@
+<button routerLink="/admin">Tagasi</button>
+
+
+<div *ngFor="let toode of tooted">
+    <div>Nimi: {{ toode.nimi }}</div>
+    <div>Hind: {{ toode.hind }}</div>
+    <div>Saadavus: {{ toode.aktiivne }}</div>
+    <button routerLink="/admin/muuda">Muuda</button>
+    <button (click)="kustutaToode(toode)">Kustuta</button>
+    <br><br>
+</div>

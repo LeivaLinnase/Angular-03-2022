@@ -12,4 +12,13 @@ export class LisaToodeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  lisa(vorm: any) {
+    console.log(vorm);
+    console.log(vorm.value.nimi);
+    console.log(vorm.value.hind);
+    console.log(vorm.value.aktiivne);
+    console.log(vorm.value.puuks);
+
+  }
+
 }

@@ -10,6 +10,7 @@ import { LisaToodeComponent } from './admin/lisa-toode/lisa-toode.component';
 import { MuudaToodeComponent } from './admin/muuda-toode/muuda-toode.component';
 import { VaataTooteidComponent } from './admin/vaata-tooteid/vaata-tooteid.component';
 import { AdminKoduComponent } from './admin/admin-kodu/admin-kodu.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,10 @@ import { AdminKoduComponent } from './admin/admin-kodu/admin-kodu.component';
     AdminKoduComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    //HTML-i jaoks olevad impordid
+    BrowserModule,  //saan kasutada *ngFor, *ngIf
+    AppRoutingModule, // routerLink
+    FormsModule, // ngForm
   ],
   providers: [],
   bootstrap: [AppComponent]

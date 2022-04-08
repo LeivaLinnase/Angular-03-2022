@@ -28,6 +28,11 @@ tooted = [
 
   ngOnInit(): void {
     console.log("pannakse ngOnInit k2ima");
+
+    const tootedLS = localStorage.getItem("tooted");
+    if (tootedLS !== null) {
+      this.tooted = JSON.parse(tootedLS);
+    }
   }
 
 lisaOstukorvi(toode: any) {

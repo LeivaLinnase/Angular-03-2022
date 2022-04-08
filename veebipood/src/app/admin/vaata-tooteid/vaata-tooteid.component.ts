@@ -17,12 +17,17 @@ export class VaataTooteidComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const tootedLS = localStorage.getItem("tooted");
+    if (tootedLS !== null) {
+      this.tooted = JSON.parse(tootedLS);
   }
+}
   
   kustutaToode(toode: any) {
 
     const j2rjekorranumber = this.tooted.indexOf(toode);
     this.tooted.splice(j2rjekorranumber, 1); //kui numbrit ei pane, kustutab array l6puni  
+    localStorage.setItem("tooted", JSON.stringify(this.tooted))
   }
 
 }

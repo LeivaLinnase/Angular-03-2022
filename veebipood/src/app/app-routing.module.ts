@@ -16,7 +16,7 @@ const routes: Routes = [
 { path: "autod", component: AutodComponent},
 { path: "admin", component: AdminKoduComponent},
 { path: "admin/lisa", component: LisaToodeComponent},
-{ path: "admin/muuda", component: MuudaToodeComponent},
+{ path: "admin/muuda/:tooteNimi", component: MuudaToodeComponent},
 { path: "admin/tooted", component: VaataTooteidComponent},
 
 

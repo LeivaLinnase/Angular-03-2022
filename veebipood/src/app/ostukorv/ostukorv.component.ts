@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,7 +14,7 @@ export class OstukorvComponent implements OnInit {
   // number = 22; //numbriline muutuja - saan teha arvutusi
   // boolean = true; //kahendv22rtus, ainult kas "true v6i "false
 
-  constructor() {
+  constructor(private http: HttpClient) {
     console.log("pannakse constructor k2ima");
    }
   
@@ -61,6 +62,32 @@ export class OstukorvComponent implements OnInit {
     // tsykli(loop) - v6tta k6igi toodete kyljest hind ja liida see koguSummale juurde
     // private = ei kasuta HTML-is. Kui vaja, eemalda private
   }
+
+  maksma() {
+    const makseAndmed = { 
+      "api_username": "92ddcfab96e34a5f",
+      "account_name": "EUR3D1",
+      "amount": this.koguSumma,
+      "order_reference": Math.random() * 893847,
+      "nonce": "a9b7f7e79" + new Date() + Math.random() * 893847,
+      "timestamp": new Date(),
+      "customer_url": "https://riccardoveebipood1.web.app/"
+     }
+     
+     const headers = {
+      headers: new HttpHeaders(
+        {
+          "Authorization": 
+          "Basic OTJkZGNmYWI5NmUzNGE1Zjo4Y2QxOWU5OWU5YzJjMjA4ZWU1NjNhYmY3ZDBlNGRhZA=="
+        }
+      )
+    };
+     this.http.post<any>("https://igw-demo.every-pay.com/api/v4/payments/oneoff", 
+     makseAndmed, 
+     headers).subscribe(tagastus => location.href = tagastus.payment_link);
+  }
+
+  
 
 
 

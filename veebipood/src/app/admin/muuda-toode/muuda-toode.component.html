@@ -1,1 +1,15 @@
 <button routerLink="/admin/tooted">Tagasi</button>
+
+
+                       
+                                  <!-- vasakul property binding: []
+                                     paremal muutuja .ts seest -->
+<form (ngSubmit)="muudaToode()" [formGroup]="muutmiseVorm">
+    <label>Nimi</label>
+    <input formControlName="nimi" type="text"><br>
+    <label>Hind</label>
+    <input formControlName="hind" type="number"><br>
+    <label>Aktiivne</label>
+    <input formControlName="aktiivne" type="checkbox"><br>
+    <button>Muuda</button>
+</form>

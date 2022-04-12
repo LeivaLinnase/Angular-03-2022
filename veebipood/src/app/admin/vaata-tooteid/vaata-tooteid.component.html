@@ -5,7 +5,7 @@
     <div>Nimi: {{ toode.nimi }}</div>
     <div>Hind: {{ toode.hind }}</div>
     <div>Saadavus: {{ toode.aktiivne }}</div>
-    <button routerLink="/admin/muuda">Muuda</button>
+    <button routerLink="/admin/muuda/{{ toode.nimi.replaceAll(' ', '-').toLowerCase().replaceAll('6', 'o') }}">Muuda</button>
     <button (click)="kustutaToode(toode)">Kustuta</button>
     <br><br>
 </div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AvalehtComponent } from './avaleht/avaleht.component';
 import { OstukorvComponent } from './ostukorv/ostukorv.component';
@@ -18,6 +18,7 @@ const routes: Routes = [
 { path: "admin/lisa", component: LisaToodeComponent},
 { path: "admin/muuda/:tooteNimi", component: MuudaToodeComponent},
 { path: "admin/tooted", component: VaataTooteidComponent},
+
 
 
 ];

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -22,17 +23,27 @@ tooted = [
 
 
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
     console.log("pannakse constructor k2ima");
   }
 
   ngOnInit(): void {
     console.log("pannakse ngOnInit k2ima");
 
-    const tootedLS = localStorage.getItem("tooted");
-    if (tootedLS !== null) {
-      this.tooted = JSON.parse(tootedLS);
+    // const tootedLS = localStorage.getItem("tooted");    LocalStorage variant
+    // if (tootedLS !== null) {
+    //   this.tooted = JSON.parse(tootedLS);
+    // }
+   this.http.get<any>("https://riccardoveebipood-default-rtdb.europe-west1.firebasedatabase.app/tooted.json")
+   .subscribe(tootedFB => {
+    this.tooted = tootedFB
+    const uusMassiiv = [];
+    for (const key in tootedFB) {
+      uusMassiiv.push(tootedFB[key]);
     }
+    this.tooted = uusMassiiv;
+    })
+     
   }
 
 lisaOstukorvi(toode: any) {

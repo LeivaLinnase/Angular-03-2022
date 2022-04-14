@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LisaToodeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -23,15 +24,17 @@ export class LisaToodeComponent implements OnInit {
     // console.log(vorm.value.aktiivne);
     // console.log(vorm.value.puuks);
 
-    let tooted = [];
+    // let tooted = [];
 
-    let tootedLS = localStorage.getItem("tooted");
-    if (tootedLS !== null)  {
-      tooted = JSON.parse(tootedLS);
-    }
+    // let tootedLS = localStorage.getItem("tooted");
+    // if (tootedLS !== null)  {
+    //   tooted = JSON.parse(tootedLS);
+    // }
 
-    tooted.push(vorm.value)
-    localStorage.setItem("tooted", JSON.stringify(tooted)) // JSON.stringify, sest sobib ainult string.
+    // tooted.push(vorm.value)
+    // localStorage.setItem("tooted", JSON.stringify(tooted)) // JSON.stringify, sest sobib ainult string.
+    this.http.post("https://riccardoveebipood-default-rtdb.europe-west1.firebasedatabase.app/tooted.json",
+    vorm.value).subscribe();
     } // if-i l6pp
   }   // funktsiooni l6pp
  

@@ -1,0 +1,16 @@
+.lang {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+.lang:hover {
+    height: 35px;
+    width: 35px;
+}
+.bg-light {
+    background-color: #95D1CC !important;
+}
+.logo {
+    height: 70px;
+    width: 300px;
+}

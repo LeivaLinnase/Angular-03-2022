@@ -11,3 +11,10 @@
 <button class="btn btn-secondary">Hall</button>
 <button class="btn btn-info">Tyrkiis</button>
 <button class="btn btn-pink">Tyrkiis</button> -->
+
+<div *ngFor="let product of products">
+    <img src="{{product.imgSrc}}" alt="">
+    <div>{{product.name}}</div>
+    <div>{{product.price}}</div>
+    <button (click)="onAddToCart(product)">Lisa {{product.name}} ostukorvi</button>
+</div>

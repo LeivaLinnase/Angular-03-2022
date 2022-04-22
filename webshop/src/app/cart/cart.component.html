@@ -1,1 +1,10 @@
-<p>cart works!</p>
+<div *ngFor="let cartProduct of cartProducts">
+    <div>{{ cartProduct.product.name }}</div>
+    <div>Hind: {{ cartProduct.product.price }} $</div>
+    <img class="cart-button" src="assets/cart/minus.png" alt="-" (click)="onDecreaseQuantity(cartProduct)"> 
+    <div>Kogus: {{ cartProduct.quantity }}</div>
+    <img class="cart-button" src="assets/cart/plus.png" alt="+" (click)="onIncreaseQuantity(cartProduct)"> 
+    <br>
+    <div>Kokku: {{ cartProduct.product.price * cartProduct.quantity }} $</div>
+    <img class="cart-button" src="assets/cart/x-button.png" alt="X" (click)="onRemoveProduct(cartProduct)"> 
+</div>

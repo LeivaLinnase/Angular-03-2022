@@ -16,6 +16,9 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
+import { DescriptionShortenerPipe } from './pipes/description-shortener.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,9 +30,12 @@ import { NavbarComponent } from './navbar/navbar.component';
     EditProductComponent,
     ViewProductComponent,
     NavbarComponent,
+    ThousandSeparatorPipe,
+    DescriptionShortenerPipe,
     
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -43,6 +49,7 @@ import { NavbarComponent } from './navbar/navbar.component';
                 deps: [HttpClient]
             }
         })
+      
   ],
   providers: [],
   bootstrap: [AppComponent]

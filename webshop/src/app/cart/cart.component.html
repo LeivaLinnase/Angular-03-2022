@@ -5,7 +5,7 @@
     <div class="cart-item-quantity">Kogus: {{ cartProduct.quantity.toFixed(2) }} tk</div>
    <div>
     
-    <div class="cart-item-total">Kokku: {{ (cartProduct.product.price * cartProduct.quantity).toFixed(2) }} $</div>
+    <div class="cart-item-total">Kokku: {{ (cartProduct.product.price * cartProduct.quantity) | thousandSeparator }} $</div>
     <img class="cart-button" src="assets/cart/minus.png" alt="-" (click)="onDecreaseQuantity(cartProduct)"> 
     <img class="cart-button" src="assets/cart/plus.png" alt="+" (click)="onIncreaseQuantity(cartProduct)"> 
     <img class="cart-button" src="assets/cart/x-button.png" alt="X" (click)="onRemoveProduct(cartProduct)">

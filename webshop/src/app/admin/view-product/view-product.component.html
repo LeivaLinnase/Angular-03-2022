@@ -1,6 +1,10 @@
+<input [(ngModel)]="descriptionWordCount" type="range">
+
+
 <div *ngFor="let product of products">
     <img src="{{product.imgSrc}}" alt="">
     <div>{{product.name}}</div>
     <div>{{product.price}}</div>
+    <div>{{product.description | descriptionShortener:descriptionWordCount}}</div>
     <button routerLink="/admin/muuda/{{ product.id }}">Muuda toodet</button>
 </div>

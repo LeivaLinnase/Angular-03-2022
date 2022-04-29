@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CartProduct } from '../models/cart-product.model';
+import { Product } from '../models/product.models';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  products: any[] = [];
+  descriptionWordCount = 3;
+  products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+  
+  // kuup2ev = new Date();
+  // protsent = 0.5;
+  // rahayhik = 1000000;
+  // lause = "vitamin well without sugar";
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
 
-    this.http.get<any>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
+    this.http.get<Product[]>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
       //  {-blabla: {1}, -lalala, {2}}      [{1},{2}]  ----> forin tsykkel (teeb objekti sees tsykli)
       // const toode = {nimi: "coca cola", hind: 3, kategooriga: "coca", aktiivne: true}
        // const newArray = [];
@@ -30,9 +38,9 @@ export class HomeComponent implements OnInit {
     
    
   }
-  onAddToCart(productClicked: any) {
+  onAddToCart(productClicked: Product) {
     const cartItemsSS = sessionStorage.getItem("cartItems");
-    let cartItems: any[] = [];
+    let cartItems: CartProduct[] = [];
     if (cartItemsSS) {  //cartItemsSS !== null
       cartItems = JSON.parse(cartItemsSS);
     }
@@ -54,4 +62,22 @@ export class HomeComponent implements OnInit {
      sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
 
+  onSortAZ() {
+    this.products.sort((a,b) => a.name.localeCompare(b.name))
+  }
+
+  onSortZA() {
+    this.products.sort((a,b) => b.name.localeCompare(a.name))
+    
+  }
+
+  onSortPriceAsc() {
+    this.products.sort((a, b) => (a.price - b.price) );
+    
+  }
+
+  onSortPriceDesc() {
+    this.products.sort((a, b) => -1*(a.price - b.price) );
+      // v6ib ka lihtsalt b.price - a.price
+  }
 }

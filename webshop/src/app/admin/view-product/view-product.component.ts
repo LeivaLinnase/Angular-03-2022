@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CartProduct } from 'src/app/models/cart-product.model';
+import { Product } from 'src/app/models/product.models';
 
 @Component({
   selector: 'app-view-product',
@@ -7,8 +9,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-product.component.css']
 })
 export class ViewProductComponent implements OnInit {
-  products: any[] = [];
+  descriptionWordCount = 3;
+  products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+  
 
   constructor(private http: HttpClient) { }
 

@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { elementAt } from 'rxjs';
 import { AddProductComponent } from '../admin/add-product/add-product.component';
+import { CartProduct } from '../models/cart-product.model';
+import { Product } from '../models/product.models';
 
 @Component({
   selector: 'app-cart',
@@ -44,7 +46,7 @@ export class CartComponent implements OnInit {
   }
 
 
-  onDecreaseQuantity(cartProduct: any) {
+  onDecreaseQuantity(cartProduct: CartProduct) {
     cartProduct.quantity--;
     if (cartProduct.quantity <= 0) {
       this.onRemoveProduct(cartProduct);
@@ -54,7 +56,7 @@ export class CartComponent implements OnInit {
 
   }
 
-  onIncreaseQuantity(cartProduct: any) {
+  onIncreaseQuantity(cartProduct: CartProduct) {
     cartProduct.quantity++;
   
     sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts))
@@ -62,7 +64,7 @@ export class CartComponent implements OnInit {
 
   }
 
-  onRemoveProduct(cartProduct: any) {
+  onRemoveProduct(cartProduct: CartProduct) {
     const index = this.cartProducts.findIndex(element => element.product.id === cartProduct.product.id);
     if (index >= 0) {
     this.cartProducts.splice(index,1);

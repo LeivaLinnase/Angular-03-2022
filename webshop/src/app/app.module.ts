@@ -11,6 +11,8 @@ import { EditProductComponent } from './admin/edit-product/edit-product.componen
 import { ViewProductComponent } from './admin/view-product/view-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
+
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -19,6 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
 import { DescriptionShortenerPipe } from './pipes/description-shortener.pipe';
 import { FormsModule } from '@angular/forms';
+import { ShopsComponent } from './shops/shops.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     ThousandSeparatorPipe,
     DescriptionShortenerPipe,
+    ShopsComponent,
     
   ],
   imports: [

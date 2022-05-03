@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-product',
@@ -12,7 +12,8 @@ export class EditProductComponent implements OnInit {
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
   product: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient,
+    private router: Router) { }
 
   ngOnInit(): void {
     // 1. p88rdun route muutuja abil ActivatedRoute klassi sisse
@@ -33,8 +34,10 @@ export class EditProductComponent implements OnInit {
     // this.products.find()
     console.log("siia j6uan varem kuigi on allpool")
     console.log(this.products);
-
+  
 
   }
-
+  onSubmit() {
+    this.router.navigateByUrl("admin/tooted")
+  }
 }

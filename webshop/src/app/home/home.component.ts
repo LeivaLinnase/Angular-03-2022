@@ -9,6 +9,13 @@ import { Product } from '../models/product.models';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  //images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [
+    "https://picsum.photos/id/944/900/300",
+    "https://picsum.photos/id/1011/900/300",
+    "https://picsum.photos/id/984/900/300"
+    // "/assets/...."
+  ];
   descriptionWordCount = 3;
   products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";

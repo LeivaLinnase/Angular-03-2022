@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
+import { stringify } from '@angular/compiler/src/util'; 
 
 
 
@@ -27,6 +29,11 @@ export class ShopsComponent implements OnInit, AfterViewInit, OnDestroy {
   muutuja: string = "lalalla"
   // kooloni abil n2itan tyypi
   // v6rdusm2rgi abil annan v22rtuse
+  dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/shops.json"
+  shops: {shopName: string,
+          latitude: number,
+          longitude: number,
+          openTimes: string}[] = [];
 
   //kui on kohene v22rtuse andmine, siis ei pea tyypi andma
   //...sest ta tunneb selle ise 2ra
@@ -55,51 +62,75 @@ export class ShopsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     tiles.addTo(this.map);
 
-    this.marker = L.marker([59.42734250809111, 24.723175657230744]);
-    this.marker.addTo(this.map);
-    this.marker.bindPopup("<div>Kristiine keskus</div><br><div>Lahtioleku aeg: 9-19</div>");
+    // this.marker = L.marker([59.42734250809111, 24.723175657230744]);
+    // this.marker.addTo(this.map);
+    // this.marker.bindPopup("<div>Kristiine keskus</div><br><div>Lahtioleku aeg: 9-19</div>");
 
     
-    this.marker2 = L.marker([59.4026539776488, 24.811400944071657])
-    this.marker2.addTo(this.map);
-    this.marker2.bindPopup("<div>Peetri Selver</div><br><div>Lahtioleku aeg: 9-22</div>");
+    // this.marker2 = L.marker([59.4026539776488, 24.811400944071657])
+    // this.marker2.addTo(this.map);
+    // this.marker2.bindPopup("<div>Peetri Selver</div><br><div>Lahtioleku aeg: 9-22</div>");
 
-    this.marker3 = L.marker([59.47551258254086, 24.724490908370825])
-    this.marker3.addTo(this.map);
-    this.marker3.bindPopup("<div>Pikakari rand</div><br><div>Lahtioleku aeg: 24/7</div><br><div>Vanusepiirang: alates 5</div>");
+    // this.marker3 = L.marker([59.47551258254086, 24.724490908370825])
+    // this.marker3.addTo(this.map);
+    // this.marker3.bindPopup("<div>Pikakari rand</div><br><div>Lahtioleku aeg: 24/7</div><br><div>Vanusepiirang: alates 5</div>");
+
+    this.shops.forEach(element => {
+      this.marker = L.marker([element.latitude, element.longitude]);
+      this.marker.addTo(this.map);
+      this.marker.bindPopup("<div>"+element.shopName+
+      "</div><br><div>Lahtioleku aeg: "+
+      element.openTimes+"</div>");
+    })
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void { 
+    this.http.get<{shopName: string,
+    latitude: number,
+    longitude: number,
+    openTimes: string}[]>(this.dbUrl).subscribe(shopsFromDb =>{
+      const newArray = [];
+      for (const key in shopsFromDb) {
+        newArray.push(shopsFromDb[key]);
+      }
+      this.shops = newArray;
+    })
     this.initMap();
   } 
 
   onZoomShop(shopName: string) {
 
-    if (shopName === "kristiine") {
-      this.map.setView(L.latLng([59.4295, 24.7224]),15);
-      this.marker.openPopup();
+    // if (shopName === "kristiine") {
+    //   this.map.setView(L.latLng([59.4295, 24.7224]),15);
+    //   this.marker.openPopup();
 
-    }
-    else if (shopName === "pikakari") {
-      this.map.setView(L.latLng([59.47551258254086, 24.724490908370825 ]),15);
-      this.marker3.openPopup();
-    }
-    else if (shopName === "peetri") {
-      this.map.setView(L.latLng([59.4026539776488, 24.811400944071657 ]),15);
-      this.marker2.openPopup();
-    }
-    else {
-      this.map.setView(L.latLng([59.43789239950658, 24.753314316848535 ]),9);
-      this.marker.closePopup();
-      this.marker2.closePopup();
-      this.marker3.closePopup();
-    }
+    // }
+    // else if (shopName === "pikakari") {
+    //   this.map.setView(L.latLng([59.47551258254086, 24.724490908370825 ]),15);
+    //   this.marker3.openPopup();
+    // }
+    // else if (shopName === "peetri") {
+    //   this.map.setView(L.latLng([59.4026539776488, 24.811400944071657 ]),15);
+    //   this.marker2.openPopup();
+    // }
+    // else {
+    //   this.map.setView(L.latLng([59.43789239950658, 24.753314316848535 ]),9);
+    //   this.marker.closePopup();
+    //   this.marker2.closePopup();
+    //   this.marker3.closePopup();
+    // }
     
+    const shopFound = this.shops.find(element => element.shopName === shopName);
+    if (shopFound) {
+      this.map.setView(L.latLng([shopFound.latitude, shopFound.longitude]), 15);
+    } else {
+      this.map.setView(L.latLng([59.4341, 24.7489]),11);
+    }
   }
 
   ngOnDestroy()  { }  // funktsioon pannakse k2ima kui 2ra minnakse

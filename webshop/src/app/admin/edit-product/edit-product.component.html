@@ -1,1 +1,37 @@
-<p>edit-product works!</p>
+
+<!-- 
+  a-form (paremal ngForm) <- teeb ngForm põhja
+  a-formGroup (paremal ngFormGroup) <- teeb FormGroup põhja
+  muutuja panna .ts faili mis on paremal pool
+  onSubmit() funktsioon teha .ts faili
+  ReactiveFormsModule app.module.ts faili imports=[] sisse
+  ! FormsModule peab olema ka imports=[] sees
+ <input formControlName="id" type="number">
+ <input formControlName="name" type="text">
+ <input formControlName="price" type="number">
+ <input formControlName="category" type="text">
+ <input formControlName="description" type="text">
+ <input formControlName="imgSrc" type="text">
+ <input formControlName="active" type="checkbox">
+ -->
+
+ <form *ngIf="product" (ngSubmit)="onSubmit()" [formGroup] = "editProductForm">
+    <label> ID:  </label> <br>
+    <input formControlName="id" type="number"> <br>
+    <label> Nimi:  </label> <br>
+    <input formControlName="name" type="text"> <br>
+    <label> Kirjeldus:  </label> <br>
+    <input formControlName="description" type="text"> <br>
+    <label> Hind:  </label> <br>
+    <input formControlName="price" type="number"> <br>
+    <label> Kategooria:  </label> <br>
+    <!-- <input formControlName="category" type="number"> -->
+    <select formControlName="category">
+      <option *ngFor="let category of categories" value="{{category.categoryName}}">{{category.categoryName}}</option>
+    </select> <br> <br>
+    <label>ImgSrc: </label> <br>
+    <input formControlName="imgSrc" type="text"> <br>
+    <label> Aktiivne:  </label> <br>
+    <input formControlName="isActive" type="checkbox"> <br>
+    <button>Muuda</button> <br>
+   </form>

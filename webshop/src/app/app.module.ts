@@ -20,8 +20,10 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ThousandSeparatorPipe } from './pipes/thousand-separator.pipe';
 import { DescriptionShortenerPipe } from './pipes/description-shortener.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShopsComponent } from './shops/shops.component';
+import { CategoryComponent } from './admin/category/category.component';
+import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +38,13 @@ import { ShopsComponent } from './shops/shops.component';
     ThousandSeparatorPipe,
     DescriptionShortenerPipe,
     ShopsComponent,
+    CategoryComponent,
+    ShopsSettingsComponent,
     
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,

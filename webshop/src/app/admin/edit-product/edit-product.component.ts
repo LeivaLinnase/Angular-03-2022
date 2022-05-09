@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from 'src/app/models/product.models';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -8,36 +11,67 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent implements OnInit {
-  products: any[] = [];
+  products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
-  product: any;
+  categoriesDbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
 
-  constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router) { }
+  product!: Product;
+  editProductForm!: FormGroup;
+  categories: {categoryName: string}[] = [];
+
+  constructor(private route: ActivatedRoute,    // ActivatedRoute võimaldab võtta URL-st parameetreid 
+    private http: HttpClient, // koma eelmise järel   HttpClient võimaldab API päringuid teha
+    private router: Router, // Router tuleb importida      Router võimaldab URL-l liikuda läbi .ts
+    private productService: ProductService) { } 
 
   ngOnInit(): void {
-    // 1. p88rdun route muutuja abil ActivatedRoute klassi sisse
-    // 2. Snapshot v6tab seisundi tolle hetke URL-ist
-    // 3. paraMap v6tab k6ik v6ti-v22rtus paarid URL-ist (URL-is kooloniga)
-    // 4. get() v6tab sulgude sees antud v6tme v22rtuse URL-ist
-    const productId = this.route.snapshot.paramMap.get("productId"); // peab olema sama mis app-routingus
-    console.log(productId);
-    this.http.get<any>(this.dbUrl).subscribe(Response => {  
-      for (const key in Response) {
-        this.products.push(Response[key]);
-      }
-      console.log("siia j6uan subscribe t6ttu hiljem kuigi on yleval pool")
-      console.log(this.products);
-      // siin pean .find() tegema
-      this.product = this.products.find(element => Number(element.id) === Number(productId))
-    });
-    // this.products.find()
-    console.log("siia j6uan varem kuigi on allpool")
-    console.log(this.products);
-  
+    const productId = this.route.snapshot.paramMap.get("productId");
+    if (productId) {
+      this.getProductsFromDb(productId);
+    }
+    this.getCategoriesFromDb();
+  }
 
+  private getProductsFromDb(productId: string) {
+    this.productService.getProductsFromDb().subscribe(response => { 
+      for (const key in response) {
+        this.products.push(response[key]);
+      }
+      const productFound = this.products.find(element => Number(element.id) === Number(productId));
+      if (productFound) {
+        this.product = productFound;
+      }
+      this.initEditForm();
+    }); 
   }
+
+  private initEditForm() {
+    this.editProductForm = new FormGroup({
+      id: new FormControl(this.product.id),
+      name: new FormControl(this.product.name),
+      price: new FormControl(this.product.price),
+      imgSrc: new FormControl(this.product.imgSrc),
+      category: new FormControl(this.product.category),
+      description: new FormControl(this.product.description),
+      isActive: new FormControl(this.product.isActive),
+    })
+  } 
+
+  private getCategoriesFromDb() {
+    this.http.get<{categoryName: string}[]>(this.categoriesDbUrl).subscribe(categoriesFromDb => {
+      const newArray = [];
+      for (const key in categoriesFromDb) {
+        newArray.push(categoriesFromDb[key]);
+      }
+      this.categories = newArray;
+    });
+  }
+
   onSubmit() {
-    this.router.navigateByUrl("admin/tooted")
+    const queueNumber = this.products.indexOf(this.product);
+    this.products[queueNumber] = this.editProductForm.value;
+    this.http.put(this.dbUrl, this.products).subscribe(()=>this.router.navigateByUrl("/admin/halda") );
+       // see suunab tagasi lehele instead of form.reset
   }
+
 }

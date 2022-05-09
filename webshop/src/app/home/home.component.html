@@ -64,10 +64,14 @@
 <input [(ngModel)]="descriptionWordCount" type="range">
 <span>{{ descriptionWordCount }}</span>
 
-<div *ngFor="let product of products">
-    <img src="{{product.imgSrc}}" alt="">
+<div class="grid-container">
+  <div class="list-item" *ngFor="let product of products">
+    
+    <img class="productPic" src="{{product.imgSrc}}" alt="">
     <div>{{product.name}}</div>
     <div>{{product.price | thousandSeparator }}</div>
     <div>{{product.description | descriptionShortener:descriptionWordCount}}</div>
-    <button (click)="onAddToCart(product)">Lisa {{product.name}} ostukorvi</button>
+    <button class="btn btn-danger" (click)="onAddToCart(product)">Lisa {{product.name}} ostukorvi</button>
+  
+</div>
 </div>

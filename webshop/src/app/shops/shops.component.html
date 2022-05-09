@@ -1,7 +1,14 @@
-<button (click)="onZoomShop('all')">K6ik poed</button>
-<button (click)="onZoomShop('kristiine')">Kristiine keskus</button>
-<button (click)="onZoomShop('peetri')">Peetri Selver</button>
-<button (click)="onZoomShop('pikakari')">Pikakari rand</button>
+<div class="nupud">
+  <button (click)="onZoomShop('all')" class="btn btn-sm btn-primary">K6ik poed</button>
+  <!-- <button (click)="onZoomShop('kristiine')" class="btn btn-sm btn-primary">Kristiine keskus</button>
+  <button (click)="onZoomShop('peetri')" class="btn btn-sm btn-primary">Peetri Selver</button>
+  <button (click)="onZoomShop('pikakari')" class="btn btn-sm btn-primary">Pikakari rand</button> -->
+<button class="btn btn-sm btn-primary" *ngFor="let shop of shops"
+(click)="onZoomShop(shop.shopName)">
+{{ shop.shopName }}
+
+</button>
+</div>
 
 
 <div class="map-container">

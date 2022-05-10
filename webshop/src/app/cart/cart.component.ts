@@ -13,15 +13,27 @@ import { Product } from '../models/product.models';
 export class CartComponent implements OnInit {
   cartProducts: any[] = [];
   totalPrice = 0;
+  parcelMachines: any[] = [];
+  selectedParcelMachine: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.http.get<any[]>("https://www.omniva.ee/locations.json").subscribe(res => this.parcelMachines = res);
+
     const cartItemsSS = sessionStorage.getItem("cartItems");
     if (cartItemsSS) {
       this.cartProducts = JSON.parse(cartItemsSS);
     }
     this.calculateTotal();
+
+    // JSON.parse ei pea tegema, sest ta tuleb juba stringina ja ta peabki olema string
+    this.selectedParcelMachine = sessionStorage.getItem("parcelMachine");
+    
+
+
+    
+    
 
   }
 
@@ -95,5 +107,30 @@ export class CartComponent implements OnInit {
      this.http.post<any>("https://igw-demo.every-pay.com/api/v4/payments/oneoff", 
      makseAndmed, 
      headers).subscribe(tagastus => location.href = tagastus.payment_link);
+  }
+
+  onParcelMachineSelected() {
+    // JSON.stringify() ei pea panema, sest juba on stringi kujul
+    //   "Elva postkontor"
+sessionStorage.setItem("parcelMachine", this.selectedParcelMachine);
+this.cartProducts.push({
+product: {id: 11110000,name:"Pakiautomaadi tasu",price:3.5,imgSrc: "assets/paki.jpeg",category: "",description: "",isActive: true},
+quantity: 1
+});
+sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
+this.calclulateSumOfCart();
+}
+
+  onUnselectParcelMachine() {
+    this.selectedParcelMachine = "";
+    sessionStorage.removeItem("parcelMachine");
+    this.onRemoveProduct({
+      product: {id: 11110000,name:"Pakiautomaadi tasu",price:3.5,imgSrc: "assets/paki.jpeg",category: "",description: "",isActive: true},
+      quantity: 1
+      })
+  }
+
+  calclulateSumOfCart() {
+
   }
 }

@@ -9,6 +9,7 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { ShopsComponent } from './shops/shops.component';
 import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.component';
+import { CarouselPicsComponent } from './admin/carousel-pics/carousel-pics.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: "admin/halda", component: ViewProductComponent},
   { path: "admin/kategooriad", component: CategoryComponent},
   { path: "admin/poodide-seaded", component: ShopsSettingsComponent },
+  { path: "admin/carousel-pics", component: CarouselPicsComponent },
   
   
   

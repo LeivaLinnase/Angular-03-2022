@@ -29,9 +29,10 @@ export class ShopsSettingsComponent implements OnInit {
   
   }
 
-  onSubmit(form: NgForm) {
-    this.http.post(this.dbUrl, form.value).subscribe();
-    this.shops.push(form.value);
+  onSubmit(addShopForm: NgForm) {
+    this.http.post(this.dbUrl, addShopForm.value).subscribe();
+    this.shops.push(addShopForm.value);
+    addShopForm.reset();
   }
 
   deleteShop(shop: {shopName: string}) {

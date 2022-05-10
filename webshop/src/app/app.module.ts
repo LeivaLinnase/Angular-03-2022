@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShopsComponent } from './shops/shops.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.component';
+import { CarouselPicsComponent } from './admin/carousel-pics/carousel-pics.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.co
     ShopsComponent,
     CategoryComponent,
     ShopsSettingsComponent,
+    CarouselPicsComponent,
     
   ],
   imports: [

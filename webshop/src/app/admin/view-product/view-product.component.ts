@@ -12,8 +12,9 @@ import { Product } from 'src/app/models/product.models';
 export class ViewProductComponent implements OnInit {
   descriptionWordCount = 3;
   products: Product[] = [];
+  originalProducts: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
-  
+  searchedProduct: string = "";
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -24,8 +25,16 @@ export class ViewProductComponent implements OnInit {
       const newArray = [];
       for (const key in Response) {
         this.products.push(Response[key]);
+        this.originalProducts.push(Response[key]);
       }
     });
+  }
+
+  onFilterProducts() {
+    console.log(this.searchedProduct);
+    this.products = this.originalProducts.filter(element =>
+       element.name.toLocaleLowerCase().indexOf(this.searchedProduct.toLocaleLowerCase()) >= 0  ||
+       element.description.toLowerCase().indexOf(this.searchedProduct.toLocaleLowerCase()) >= 0) 
   }
 
 }

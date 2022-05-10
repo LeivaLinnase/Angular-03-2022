@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit(addImageForm)" #addImageForm="ngForm">
+    <label>Link</label><br>
+    <input ngModel name="url" type="text"><br>
+    <label>Pealkiri</label><br>
+    <input ngModel name="header" type="text"><br>
+    <label>Tekst</label><br>
+    <input ngModel name="text" type="text"><br>
+    <label>Alt tekst</label><br>
+    <input ngModel name="alt" type="text"><br>
+    <button class="btn btn-primary">Lisa karuselli</button>
+</form>
+<br>
+<br>
+
+
+<div *ngFor="let image of images">
+    <img src="{{image.url}}" alt="{{image.alt}}">
+    <div>{{image.header}}</div>
+    <div><i>{{image.text}}</i></div>
+    <button (click)="deleteImage(image)" class="btn btn-sm btn-danger">Kustuta</button>
+    <br>
+    <br>
+
+</div>
+

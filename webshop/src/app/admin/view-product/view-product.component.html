@@ -1,5 +1,7 @@
 <input [(ngModel)]="descriptionWordCount" type="range">
-
+<br><br>
+<input [(ngModel)]="searchedProduct" (ngModelChange)="onFilterProducts()" type="text">
+<br><br>
 
 <div *ngFor="let product of products">
     <img src="{{product.imgSrc}}" alt="">

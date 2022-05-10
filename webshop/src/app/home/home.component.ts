@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   descriptionWordCount = 3;
   products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
-  
+  images2: {url: string, header: string, text: string, alt: string}[] = [];
   // kuup2ev = new Date();
   // protsent = 0.5;
   // rahayhik = 1000000;
@@ -28,6 +28,14 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+
+    this.http.get<{url: string, header: string, text: string, alt: string}[]>(this.dbUrl).subscribe(imagesFormDb => {
+      const newArray = [];
+      for (const key in imagesFormDb) {
+        newArray.push(imagesFormDb[key]);
+      }
+      this.images2 = newArray;
+    }) ;
 
     this.http.get<Product[]>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
       //  {-blabla: {1}, -lalala, {2}}      [{1},{2}]  ----> forin tsykkel (teeb objekti sees tsykli)
@@ -57,7 +65,14 @@ export class HomeComponent implements OnInit {
       // ++  suurendan ennast 1 v6rra --> cartItems[index].quantity + 1
     }
     else {
-      cartItems.push({ product: productClicked, quantity: 1 })
+      const parcelMachineIndex = cartItems.findIndex(element => element.product.id === 11110000);
+      if(parcelMachineIndex >= 0) {
+        cartItems.splice(parcelMachineIndex, 0,{product:productClicked, quantity: 1});
+
+      } else {
+        cartItems.push({ product: productClicked, quantity: 1 })
+      }
+      
     }
     // enne kui pushin otsi yles kas sellist toodet juba on ostukorvi esemete hulgas
     // sulgude seest tuleva eseme id ---> product.id

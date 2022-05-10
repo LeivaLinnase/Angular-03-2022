@@ -6,8 +6,8 @@
    <div>
     
     <div class="cart-item-total">Kokku: {{ (cartProduct.product.price * cartProduct.quantity) | thousandSeparator }} $</div>
-    <img class="cart-button" src="assets/cart/minus.png" alt="-" (click)="onDecreaseQuantity(cartProduct)"> 
-    <img class="cart-button" src="assets/cart/plus.png" alt="+" (click)="onIncreaseQuantity(cartProduct)"> 
+    <img *ngIf="cartProduct.product.id !== 11110000" class="cart-button" src="assets/cart/minus.png" alt="-" (click)="onDecreaseQuantity(cartProduct)"> 
+    <img *ngIf="cartProduct.product.id !== 11110000" class="cart-button" src="assets/cart/plus.png" alt="+" (click)="onIncreaseQuantity(cartProduct)"> 
     <img class="cart-button" src="assets/cart/x-button.png" alt="X" (click)="onRemoveProduct(cartProduct)">
    </div>
     
@@ -26,3 +26,16 @@
 
 
 </div>
+
+
+    <select [(ngModel)]="selectedParcelMachine"
+     (ngModelChange)="onParcelMachineSelected()"
+     *ngIf="!selectedParcelMachine"
+     >
+        <option *ngFor="let machine of parcelMachines">{{machine.NAME}}  ({{machine.A1_NAME}})</option>
+    </select>
+
+   <div *ngIf="selectedParcelMachine">
+    <div>Valitud pakiautomaat: {{ selectedParcelMachine }}</div>
+    <button class="btn btn-sm btn-danger" (click)="onUnselectParcelMachine()">X</button>
+   </div>

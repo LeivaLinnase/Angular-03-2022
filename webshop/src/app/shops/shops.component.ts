@@ -3,6 +3,9 @@ import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { stringify } from '@angular/compiler/src/util'; 
 
+declare let Email: any;
+import 'src/assets/smtp.js';
+
 
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -98,9 +101,10 @@ export class ShopsComponent implements OnInit, AfterViewInit, OnDestroy {
       for (const key in shopsFromDb) {
         newArray.push(shopsFromDb[key]);
       }
-      this.shops = newArray;
+      this.shops = newArray; 
+      this.initMap();
     })
-    this.initMap();
+    
   } 
 
   onZoomShop(shopName: string) {
@@ -132,7 +136,19 @@ export class ShopsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.map.setView(L.latLng([59.4341, 24.7489]),11);
     }
   }
-
+  onSendEmail() {
+    Email.send({
+      Host : "smtp.elasticemail.com",
+      Username : "riccardokiho05@gmail.com",
+      Password : "C3AC2C8B6F4C7E9794F48D8F14D7F5491B30",
+      To : 'riccardokiho05@gmail.com',
+      From : "riccardokiho05@gmail.com",
+      Subject : "Korras",
+      Body : "K6ik toimib"
+      }).then(
+      (message: any) => alert(message)
+);
+  }
   ngOnDestroy()  { }  // funktsioon pannakse k2ima kui 2ra minnakse
 
 }

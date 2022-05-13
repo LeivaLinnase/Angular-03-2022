@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { elementAt } from 'rxjs';
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../models/product.models';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -24,20 +26,28 @@ export class HomeComponent implements OnInit {
   // protsent = 0.5;
   // rahayhik = 1000000;
   // lause = "vitamin well without sugar";
+  categories: string[] = [];
+  selectedCategory = "";
+  originalProducts: Product[] = [];
 
-  constructor(private http: HttpClient) { }
+
+  constructor( 
+    private productService: ProductService) { }
 
   ngOnInit(): void {
 
-    this.http.get<{url: string, header: string, text: string, alt: string}[]>(this.dbUrl).subscribe(imagesFormDb => {
-      const newArray = [];
-      for (const key in imagesFormDb) {
-        newArray.push(imagesFormDb[key]);
-      }
-      this.images2 = newArray;
-    }) ;
+    // this.http.get<{url: string, header: string, text: string, alt: string}[]>(this.dbUrl).subscribe(imagesFormDb => {
+    //   const newArray = [];
+    //   for (const key in imagesFormDb) {
+    //     newArray.push(imagesFormDb[key]);
+    //   }
+      
+   // pidin eelneva kommenteerima....lisaks eemaldasin private http: HttpClient
 
-    this.http.get<Product[]>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
+      
+    // }) ;
+    this.productService.getProductsFromDb().subscribe(Response => {
+    // this.http.get<Product[]>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
       //  {-blabla: {1}, -lalala, {2}}      [{1},{2}]  ----> forin tsykkel (teeb objekti sees tsykli)
       // const toode = {nimi: "coca cola", hind: 3, kategooriga: "coca", aktiivne: true}
        // const newArray = [];
@@ -48,11 +58,25 @@ export class HomeComponent implements OnInit {
       const newArray = [];
       for (const key in Response) {
         this.products.push(Response[key]);
+        this.originalProducts.push(Response[key]);
       }
+
+      this.categories = this.products.map(element => element.category);
+      this.categories = [...new Set(this.categories)];
     });
     
    
   }
+
+  onFilterByCategory(category: string) {
+    this.selectedCategory = category;
+    if (category === '') {
+      this.products = this.originalProducts;
+    } else {
+      this.products = this.originalProducts.filter(element => element.category === category);
+    }
+  }
+
   onAddToCart(productClicked: Product) {
     const cartItemsSS = sessionStorage.getItem("cartItems");
     let cartItems: CartProduct[] = [];
@@ -82,6 +106,7 @@ export class HomeComponent implements OnInit {
     // if()  index >= 0 ---> suurendan kogust
     // else index === -1 ---> lisan ostukorvi .push abil 
      sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+     this.productService.cartChanged.next(true);
   }
 
   onSortAZ() {

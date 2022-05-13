@@ -30,3 +30,7 @@
     
     margin: 4px;
   }
+  .category-selected {
+    font-weight: bold;
+    font-size: larger;
+  }

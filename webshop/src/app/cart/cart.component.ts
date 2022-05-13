@@ -4,6 +4,7 @@ import { elementAt } from 'rxjs';
 import { AddProductComponent } from '../admin/add-product/add-product.component';
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../models/product.models';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,8 @@ export class CartComponent implements OnInit {
   parcelMachines: any[] = [];
   selectedParcelMachine: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private productService: ProductService) { }
 
   ngOnInit(): void {
     this.http.get<any[]>("https://www.omniva.ee/locations.json").subscribe(res => this.parcelMachines = res);
@@ -41,6 +43,7 @@ export class CartComponent implements OnInit {
     this.cartProducts = [];
     sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts))
     this.calculateTotal();
+    this.productService.cartChanged.next(true);
 
   }
     
@@ -52,7 +55,7 @@ export class CartComponent implements OnInit {
      let totalPrice = this.cartProducts.forEach
      (element => this.totalPrice = this.totalPrice + element.product.price * element.quantity);
     
-    
+     this.productService.cartChanged.next(true);
      
    
   }
@@ -65,6 +68,7 @@ export class CartComponent implements OnInit {
     }
     sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts))
     this.calculateTotal();
+    this.productService.cartChanged.next(true);
 
   }
 
@@ -73,6 +77,7 @@ export class CartComponent implements OnInit {
   
     sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts))
     this.calculateTotal();
+    this.productService.cartChanged.next(true);
 
   }
 
@@ -80,9 +85,13 @@ export class CartComponent implements OnInit {
     const index = this.cartProducts.findIndex(element => element.product.id === cartProduct.product.id);
     if (index >= 0) {
     this.cartProducts.splice(index,1);
+    if (this.cartProducts.length === 1 && this.cartProducts[0].product.id === 11110000) {
+      this.onUnselectParcelMachine();
+    }
     sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
     this.calculateTotal();
    }
+   this.productService.cartChanged.next(true);
   }
 
   pay() {
@@ -119,6 +128,7 @@ quantity: 1
 });
 sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
 this.calclulateSumOfCart();
+this.productService.cartChanged.next(true);
 }
 
   onUnselectParcelMachine() {
@@ -128,6 +138,7 @@ this.calclulateSumOfCart();
       product: {id: 11110000,name:"Pakiautomaadi tasu",price:3.5,imgSrc: "assets/paki.jpeg",category: "",description: "",isActive: true},
       quantity: 1
       })
+      this.productService.cartChanged.next(true);
   }
 
   calclulateSumOfCart() {

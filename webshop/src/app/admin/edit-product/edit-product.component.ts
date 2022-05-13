@@ -70,7 +70,7 @@ export class EditProductComponent implements OnInit {
   onSubmit() {
     const queueNumber = this.products.indexOf(this.product);
     this.products[queueNumber] = this.editProductForm.value;
-    this.http.put(this.dbUrl, this.products).subscribe(()=>this.router.navigateByUrl("/admin/halda") );
+    this.productService.updateProductsInDb(this.products).subscribe(()=>this.router.navigateByUrl("/admin/halda") );
        // see suunab tagasi lehele instead of form.reset
   }
 

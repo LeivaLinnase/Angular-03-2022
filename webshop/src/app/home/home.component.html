@@ -56,6 +56,14 @@
   </ng-template>
 </ngb-carousel>
 
+<div (click)="onFilterByCategory('')"
+[ngClass]="{'category-selected': '' === selectedCategory}">K6ik kategooriad</div>
+
+<div *ngFor="let category of categories"
+(click)="onFilterByCategory(category)"
+[ngClass]="{'category-selected': category === selectedCategory}"
+>{{ category }}</div>
+
 
 <button class="btn btn-sm btn-primary" (click)="onSortAZ()">Sorteeri A-Z</button>
 <button class="btn btn-sm btn-primary" (click)="onSortZA()">Sorteeri Z-A</button>

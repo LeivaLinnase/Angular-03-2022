@@ -10,18 +10,28 @@ import { HomeComponent } from './home/home.component';
 import { ShopsComponent } from './shops/shops.component';
 import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.component';
 import { CarouselPicsComponent } from './admin/carousel-pics/carousel-pics.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "ostukorv", component: CartComponent},
   { path: "poed", component: ShopsComponent},
-  { path: "admin", component: AdminHomeComponent},
-  { path: "admin/lisa", component: AddProductComponent},
-  { path: "admin/muuda/:productId", component: EditProductComponent},
-  { path: "admin/halda", component: ViewProductComponent},
-  { path: "admin/kategooriad", component: CategoryComponent},
-  { path: "admin/poodide-seaded", component: ShopsSettingsComponent },
-  { path: "admin/carousel-pics", component: CarouselPicsComponent },
+  { path: "logi-sisse", component: LoginComponent},
+  { path: "registreeru", component: SignupComponent},
+
+  { path: "admin", canActivateChild: [AuthGuard], children: [ 
+  { path: "", component: AdminHomeComponent},
+  { path: "lisa", component: AddProductComponent}, //ennem oli admin/lisa
+  { path: "muuda/:productId", component: EditProductComponent}, //ennem oli admin/muuda/:productId
+  { path: "halda", component: ViewProductComponent},
+  { path: "kategooriad", component: CategoryComponent},
+  { path: "poodide-seaded", component: ShopsSettingsComponent },
+  { path: "carousel-pics", component: CarouselPicsComponent },
+  ] }
+
+ 
   
   
   
@@ -32,3 +42,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+// guard - saan aktiveerida URLe
+// seda kasutatakse vaid app-routing sees

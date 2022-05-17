@@ -11,8 +11,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
-  // dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
-  // categoriesDbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
+  dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+  categoriesDbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
 
   categories: {categoryName: string}[] = [];
   productId!: number;
@@ -58,10 +58,11 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(addProductForm: NgForm) {
-    // this.http.post(this.dbUrl, addProductForm.value).subscribe(); kommenteerin kuna,
+    this.http.post(this.dbUrl, addProductForm.value).subscribe(); 
+    // kommenteerin kuna,
     // kasutan service(product.service.ts)
-    this.productService.addProductDb(addProductForm.value)
-    addProductForm.reset();
+    // this.productService.addProductDb(addProductForm.value)
+    // addProductForm.reset();
   }
 
   

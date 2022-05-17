@@ -76,12 +76,14 @@
 
 <div class="grid-container">
   <div class="list-item" *ngFor="let product of products">
-    
+    <div [ngClass]="{'active': product.isActive && loggedIn,
+                    'inactive': !product.isActive && loggedIn}"
+     *ngIf="product.isActive === true || loggedIn === true">
     <img class="productPic" src="{{product.imgSrc}}" alt="">
     <div>{{product.name}}</div>
     <div>{{product.price | thousandSeparator }}</div>
     <div>{{product.description | descriptionShortener:descriptionWordCount}}</div>
     <button class="btn btn-danger" (click)="onAddToCart(product)">Lisa {{product.name}} ostukorvi</button>
-  
+  </div>
 </div>
 </div>

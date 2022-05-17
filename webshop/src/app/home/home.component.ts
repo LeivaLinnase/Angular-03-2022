@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { elementAt } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../models/product.models';
 import { ProductService } from '../services/product.service';
@@ -29,10 +30,12 @@ export class HomeComponent implements OnInit {
   categories: string[] = [];
   selectedCategory = "";
   originalProducts: Product[] = [];
+  loggedIn = false;
 
 
   constructor( 
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -64,6 +67,10 @@ export class HomeComponent implements OnInit {
       this.categories = this.products.map(element => element.category);
       this.categories = [...new Set(this.categories)];
     });
+    
+    this.authService.loggedInChanged.subscribe(loggedInFromSubject => {
+      this.loggedIn = loggedInFromSubject;
+    })
     
    
   }

@@ -25,6 +25,8 @@ import { ShopsComponent } from './shops/shops.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { ShopsSettingsComponent } from './admin/shops-settings/shops-settings.component';
 import { CarouselPicsComponent } from './admin/carousel-pics/carousel-pics.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { CarouselPicsComponent } from './admin/carousel-pics/carousel-pics.compo
     CategoryComponent,
     ShopsSettingsComponent,
     CarouselPicsComponent,
+    LoginComponent,
+    SignupComponent,
     
   ],
   imports: [

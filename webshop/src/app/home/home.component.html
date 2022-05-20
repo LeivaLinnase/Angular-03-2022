@@ -26,7 +26,8 @@
 <div>{{ protsent * 100 + "%" }}</div> -->
 
 
-<ngb-carousel class="carousel-wrapper" *ngIf="images">
+
+<!-- <ngb-carousel class="carousel-wrapper" *ngIf="images">
   <ng-template ngbSlide>
     <div class="picsum-img-wrapper">
       <img [src]="images[0]" alt="Random first slide">
@@ -54,7 +55,21 @@
       <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
     </div>
   </ng-template>
+</ngb-carousel> -->
+
+
+<ngb-carousel class="carousel-wrapper" *ngIf="images2">
+  <ng-template *ngFor="let image of images2" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img src="{{image.url}}" alt="Random first slide">
+    </div>
+    <div class="carousel-caption">
+      <h3>{{image.header}}</h3>
+      <p>{{image.text}}</p>
+    </div>
+  </ng-template>
 </ngb-carousel>
+
 
 <div (click)="onFilterByCategory('')"
 [ngClass]="{'category-selected': '' === selectedCategory}">K6ik kategooriad</div>
@@ -87,3 +102,9 @@
   </div>
 </div>
 </div>
+
+<lib-toastify-toast-container
+[autoClose]="1500"
+[position]="'bottom-right'"
+
+></lib-toastify-toast-container>

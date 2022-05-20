@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartProduct } from 'src/app/models/cart-product.model';
 import { Product } from 'src/app/models/product.models';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-view-product',
@@ -16,7 +17,8 @@ export class ViewProductComponent implements OnInit {
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
   searchedProduct: string = "";
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute,
+    private productService: ProductService) { }
 
   ngOnInit(): void {
 
@@ -35,6 +37,10 @@ export class ViewProductComponent implements OnInit {
     this.products = this.originalProducts.filter(element =>
        element.name.toLocaleLowerCase().indexOf(this.searchedProduct.toLocaleLowerCase()) >= 0  ||
        element.description.toLowerCase().indexOf(this.searchedProduct.toLocaleLowerCase()) >= 0) 
+  }
+  onChangeProductActive(product: Product) {
+    product.isActive = !product.isActive;
+    this.productService.updateProductsInDb(this.products).subscribe();
   }
 
 }

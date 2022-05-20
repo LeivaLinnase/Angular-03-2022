@@ -10,6 +10,7 @@ import { AddProductComponent } from './admin/add-product/add-product.component';
 import { EditProductComponent } from './admin/edit-product/edit-product.component';
 import { ViewProductComponent } from './admin/view-product/view-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService, AngularToastifyModule } from 'angular-toastify'; 
 
 
 
@@ -54,6 +55,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    AngularToastifyModule,
     BrowserModule,
         // ngx-translate and the loader module
         HttpClientModule,
@@ -66,7 +68,7 @@ import { SignupComponent } from './auth/signup/signup.component';
         })
       
   ],
-  providers: [],
+  providers: [ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

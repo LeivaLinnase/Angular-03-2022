@@ -21,7 +21,9 @@
     <label>Kirjeldus</label> <br>
     <input ngModel name="description" type="text" required> <br>
     <label>PIlt</label> <br>
-    <input ngModel name="imgSrc" type="text" required> <br>
+    <!-- <input ngModel name="imgSrc" type="text" required> <br> -->
+    <input ngModel name="imgSrc" (change)="handleFileInput($event)" type="file">
+    <button type="button" *ngIf="this.selectedFile" (click)="sendPictureToDb()">Saada pilt andmebaasi</button>
     <label>Aktiivne</label> <br>
     <input ngModel name="active" type="checkbox"> <br>
     <button [disabled]="addProductForm.invalid || !idUnique">SISESTA</button>

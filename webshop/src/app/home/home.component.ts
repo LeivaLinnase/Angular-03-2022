@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { ToastService } from 'angular-toastify';
 import { elementAt } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { CartProduct } from '../models/cart-product.model';
@@ -22,7 +24,9 @@ export class HomeComponent implements OnInit {
   descriptionWordCount = 3;
   products: Product[] = [];
   dbUrl = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/products.json";
-  images2: {url: string, header: string, text: string, alt: string}[] = [];
+  dbUrl2 = "https://riccardowebshop-default-rtdb.europe-west1.firebasedatabase.app/images.json";
+  images2: any[] = [];
+  // images2: {url: string, header: string, text: string, alt: string}[]
   // kuup2ev = new Date();
   // protsent = 0.5;
   // rahayhik = 1000000;
@@ -31,11 +35,14 @@ export class HomeComponent implements OnInit {
   selectedCategory = "";
   originalProducts: Product[] = [];
   loggedIn = false;
+  searchedItem = "";
 
 
   constructor( 
+    private http: HttpClient,
     private productService: ProductService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private _toastService: ToastService) { }
 
   ngOnInit(): void {
 
@@ -49,6 +56,17 @@ export class HomeComponent implements OnInit {
 
       
     // }) ;
+
+    this.http.get<{url: string, header: string, text: string, alt: string}[]>(this.dbUrl2).subscribe(imagesFromDb => {
+    // this.http.get<{imgName: string}[]>(this.dbUrl).subscribe(imagesFromDb => {
+      const newArray = [];
+      for (const key in imagesFromDb) {
+        newArray.push(imagesFromDb[key]);
+      }
+      this.images2 = newArray;
+      console.log(this.images2);
+    });
+
     this.productService.getProductsFromDb().subscribe(Response => {
     // this.http.get<Product[]>(this.dbUrl).subscribe(Response => {    //.subscribe lubab edasi minna
       //  {-blabla: {1}, -lalala, {2}}      [{1},{2}]  ----> forin tsykkel (teeb objekti sees tsykli)
@@ -114,6 +132,13 @@ export class HomeComponent implements OnInit {
     // else index === -1 ---> lisan ostukorvi .push abil 
      sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
      this.productService.cartChanged.next(true);
+     
+     this._toastService.info(productClicked.name + ' lisati ostukorvi');
+     // info - sinine
+     // sucess - roheline
+     //error - punane
+     //....
+   
   }
 
   onSortAZ() {
@@ -134,4 +159,15 @@ export class HomeComponent implements OnInit {
     this.products.sort((a, b) => -1*(a.price - b.price) );
       // v6ib ka lihtsalt b.price - a.price
   }
+//  onSearch() {
+
+//     this.products.forEach((product, i) => {
+//       let productDiv = document.getElementsByClassName("product")[i] as HTMLElement
+//       if (product.name.toUpperCase().indexOf(this.searchedItem.toUpperCase()) > -1) {
+//         productDiv.style.display = "";
+//       } else {
+//         productDiv.style.display = "none";
+//       }
+//     });
+//  }   KODUT88 PROOVIFUNKTSIOON
 }

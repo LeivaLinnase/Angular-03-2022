@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Product } from 'src/app/models/product.models';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImageUploadService } from 'src/app/services/image-upload.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -18,10 +19,13 @@ export class AddProductComponent implements OnInit {
   productId!: number;
   products: Product[] = [];
   idUnique = false;
+  selectedFile!: File;
+  
 
   constructor(private http: HttpClient,
     private productService: ProductService,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService,
+    private imageUploadService: ImageUploadService) { }
 
   // KUI LÄHEN LEHELE, vahetult enne HTMLi pannakse käima ngOnInit
   // LEHELE MINNES TAHAN NÄHA KÕIKI KATEGOORIAID
@@ -57,13 +61,35 @@ export class AddProductComponent implements OnInit {
       
   }
 
-  onSubmit(addProductForm: NgForm) {
-    this.http.post(this.dbUrl, addProductForm.value).subscribe(); 
-    // kommenteerin kuna,
-    // kasutan service(product.service.ts)
-    // this.productService.addProductDb(addProductForm.value)
-    // addProductForm.reset();
+  handleFileInput(event: any) {
+    this.selectedFile = <File>event.target.files[0];
   }
+
+  sendPictureToDb() {
+    this.imageUploadService.uploadPicture(this.selectedFile);
+  }
+
+  // onSubmit(addProductForm: NgForm) {
+  //   this.http.post(this.dbUrl, addProductForm.value).subscribe(); 
+  //   // kommenteerin kuna,
+  //   // kasutan service(product.service.ts)
+  //   // this.productService.addProductDb(addProductForm.value)
+  //   // addProductForm.reset();
+  
+    
+  // }
+
+  onSubmit(addProductForm: NgForm) {
+    // this.http.post(this.dbUrl, addProductForm.value).subscribe();
+    const url = this.imageUploadService.uploadedPictureUrl;
+
+    const val = addProductForm.value;
+    const newProduct = new Product(val.id,val.name, url, val.price, val.category,
+      val.description, val.active);
+    this.productService.addProductDb(newProduct).subscribe();
+    addProductForm.reset();
+  }
+
 
   
 }
